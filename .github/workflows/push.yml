@@ -1,0 +1,17 @@
+name: Deploy del sitio
+on:
+  push:
+    branches:
+      - main
+jobs:
+  deploy-page:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: action/checkout@v2.3.1
+      
+    - name: Deploy
+      uses: JamesIves/github-pages-deploy-action@4.1.4
+      with:
+        branch: gh-pages
+        folder: . 
