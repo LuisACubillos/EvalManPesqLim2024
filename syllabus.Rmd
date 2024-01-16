@@ -1,0 +1,69 @@
+---
+title: "Evaluación y Manejo de Pesquerías Limitadas en Datos (v.2024)"
+author: "Luis A. Cubillos"
+date: "Enero 2024"
+output: html_document
+---
+
+Los requisitos se pueden encontrar [aquí](https://luisacubillos.github.io/EvalManPesqLim2024/index.html#Requisitos). Los archivos y códigos pueden ser obtenidos [aquí](https://github.com/LuisACubillos/EvalManPesqLim2024) (click 'Download ZIP' cerca de la parte superior para descargar localmente).
+
+## Día 1: Conceptos fundamentales: enfoque poblacional y marco biológico para el manejo y la evaluación de stocks
+
+Hora  | Tópicos
+----------- | ----------------------------------------------------
+11:00-15:00 | Breve presentación, motivación e intereses
+11:15-12:00 | [Enfoque poblacional para el manejo y la evaluación de stock](https://luisacubillos.github.io/EvalManPesqLim2024/Clases/Dia1_Clase1_Intro_Gnrl.pdf)
+12:00-12:15 | Café
+12:15-13:30 | [Sobrepesca y algunos modelos de evaluación limitados en datos](https://luisacubillos.github.io/EvalManPesqLim2024/Clases/Dia1_Clase2_Sobrepesca_ModEvalStock.pdf)
+13:30-14:30 | Pausa
+14:30-15:30 | [Lab1-Guía Práctica: Modelos por recluta y producción equilibrada](https://luisacubillos.github.io/EvalManPesqLim2024/Lab/Lab1-GuaPractica-Modelos_por_recluta_y_produccion_equilibrada.pdf)
+15:30-15:45 | Café
+15:45-16:30 | Continuación Lab1
+
+## Día 2: Modelos de evaluación de stock basado en datos de tallas (LBI, LBSPR, LBPA, LBB)
+
+Hora  | Tópicos
+------------- | ----------------------------------------------------
+11:00-12:00 | [Length-based models](https://luisacubillos.github.io/EvalManPesqLim2024/Clases/Dia2_Clase3_ModelosTalla-Basados.pdf) y [Lab 2 - Guía práctica LBI](https://luisacubillos.github.io/EvalManPesqLim2024/Lab/Lab2_Guia_Practica_LBI.pdf)
+12:00-12:15 | Café
+12:15-13:30 | [Lab 3 - Guía práctica LBSPR](https://luisacubillos.github.io/EvalManPesqLim2024/Lab/Lab3_Guia_Practica_LBSPR.pdf)
+13:30-14:30 | Pausa
+14:30-15:30 | Demostración LBB
+15:30-15:45 | Café
+15:45-16:30 | Demostración LBPA
+
+## Día 3: Modelos de evaluación basados sólo en datos de captura (CMSY, OCOM, BSPM, AMSY, JABBA)
+
+Hora  | Tópicos
+------------- | ----------------------------------------------------
+11:00-12:00 | [Catch-only models]
+12:00-12:15 | Café
+11:15-12:00 | Lab 4 - Guía práctica OCOM, CMSY2, BSPM
+12:00-12:15 | Pausa y café
+12:15-13:00 | Demostración AMSY
+13:00-14:00 | Pausa
+14:00-15:00 | Demostración JABBA
+
+## Día 4: Reglas de control de captura. Simulación bajo incertidumbre
+
+Hora  | Tópicos
+------------- | ----------------------------------------------------
+10:00-11:00 | Análisis estructural de capturas y HCR
+11:00-11:15 | Pausa y café
+11:15-12:00 | Lab 6 - Guía Práctica Fase de Proyección HCR F-basada
+12:00-12:15 | Pausa y café
+12:15-13:00 | Lab 7 - Guía Práctica Fase de Proyección HCR Captura-basada
+13:00-14:00 | Pausa
+14:00-15:00 | Consultas casos de estudio
+
+## Día 5: Casos de estudio
+
+Hora  | Tópicos
+------------- | ----------------------------------------------------
+11:00-12:00 | Presentaciones casos de estudio (I)
+12:00-12:15 | Café
+12:15-13:30 | Presentaciones casos de estudio (II)
+13:30-14:30 | Pausa
+14:30-15:30 | Presentaciones casos de estudio (III)
+15:30-15:45 | Café
+15:45-16:00 | Discusión general y clausura
