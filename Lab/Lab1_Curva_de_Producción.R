@@ -1,8 +1,6 @@
-
-
-
 # Packages ----------------------------------------------------------------
 #install.packages("devtools")
+#intall.packages("Matrix")
 #install.packages("TMB")
 #devtools::install_github("james-thorson/FishLife")
 library(FishLife)
@@ -58,11 +56,14 @@ crea_lh_list <- function(lh,puntual=TRUE,seed = NULL){
 
 gen = "Scomber"
 spp = "japonicus"
-m1 <- Plot_taxa(Search_species( Genus=gen, Species = spp)$match_taxonomy, mfrow=c(2,3) )
+m1 <- Plot_taxa(Search_species(Genus=gen,
+                                Species = spp)$match_taxonomy,
+                mfrow=c(2,3))
 
 
 # Parametros de historia de vida ------------------------------------------
 lh <- crea_lh_list(lh=m1)
+lh$Linf = 50
 
 plot(lh$edad,lh$lt,type="b",xlim=c(0,max(lh$edad)),ylim=c(0,max(lh$lt)*1.2),las=1,xlab="Edad",ylab="Longitud (cm)")
 plot(lh$edad,lh$wt,type="b",xlim=c(0,max(lh$edad)),ylim=c(0,max(lh$wt)*1.2),las=1,xlab="Edad",ylab="Peso total (gr)")
@@ -98,9 +99,14 @@ SPRFmort <- function(Fmort,Tspw){
   assign("out",out,pos=1)
 }
 
+edad = 1:9
+a50 = 2
+b1 = 0.5
+sel = 1/(1+exp(-(edad-a50)/b1))
 Fmort <- seq(0,2,0.01) # Mortalidad por pesca
-Sel <- lh$pm #selectividad=madurez
+Sel <- sel#lh$pm #selectividad=madurez
 plot(lh$edad,Sel,type="b",xlim=c(0,max(lh$edad)),ylim=c(0,1),las=1,xlab="Edad",ylab="Selectividad")
+lines(lh$edad,lh$pm,col="pink")
 age <- seq(1,lh$tmax,1)
 W <- lh$wt #peso promedio a la edad
 Ph <- lh$pm # fracción de madurez a la edad
@@ -141,9 +147,14 @@ points(S0,1,pch=19,col="green")
 points(0.2*S0,h*R0,pch=19,col="brown")
 
 
-
 # Curvas de producción ----------------------------------------------------
-
 Yrel = Out$ypr*Rrel
+
 plot(Fmort,Yrel,type="l",lwd=1.5,ylim=c(0,max(Yrel)*1.2),las=1,ylab="Captura relativa",xlab="Mortalidad por pesca (F)")
 plot(Srel,Yrel,type="l",lwd=1.5,ylim=c(0,max(Yrel)*1.2),las=1,ylab="Captura relativa",xlab="Biomasa (S)")
+
+Yrel1 = Yrel/max(Yrel)*100
+Srel1 = Srel/max(Srel)*100
+
+plot(Fmort,Yrel1,type="l",lwd=1.5,ylim=c(0,max(Yrel1)*1.2),las=1,ylab="Captura relativa",xlab="Mortalidad por pesca (F)")
+plot(Srel1,Yrel1,type="l",lwd=1.5,ylim=c(0,max(Yrel1)*1.2),las=1,ylab="Captura relativa",xlab="Biomasa (S)")

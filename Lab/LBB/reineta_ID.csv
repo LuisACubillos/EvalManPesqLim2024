@@ -1,0 +1,2 @@
+﻿File,Species,Stock,StartYear,EndYear,Years.user,Year.select,Gears.user,Lcut.user,Lc.user,Lstart.user,Linf.user,MK.user,mm.user,GausSel,MergeLF,Pile,Lm50,Comment,Source
+reineta_LFD.csv,Brama australis,reineta,2010,2017,"2013,2014,2016,2017",2017,NA,NA,NA,NA,NA,2,FALSE,FALSE,TRUE,0,NA,RF:ParmsLeal,IFOP
