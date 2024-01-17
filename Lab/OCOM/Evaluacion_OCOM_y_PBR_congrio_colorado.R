@@ -20,15 +20,30 @@ library(ggpubr)
 
 
 # Datos -------------------------------------------------------------------
-#dt <- read.csv("Datos/congriocol.csv",sep=";")
-load("Datos/Modelo_ocom_congrio.RData")
+dt <- read.csv("Datos/congriocol.csv",sep=";")
 # Prepara los datos en objetos separados
 ct <- dt$Desembarque
 yr <- dt$YY #años
 range(yr)
 
+p1 <- ggplot(data=dt,aes(x=YY, y=Desembarque))+
+  geom_line()+
+  geom_point()+
+  #geom_bar(position = "dodge",stat="identity",width = 0.8,color="black") +
+  #scale_fill_manual(values = c("#6C8EBF","#FFFFFF","orange","#74767a","red","grey70"))+
+  #scale_fill_manual(values = colorRampPalette(c("#FFFFFF","grey70","grey10"))(4))+
+  labs(x="Año", y="Desembarque (toneladas)")+
+  scale_x_continuous(limits = c(1957.5,2021.5))+
+  labs(title = "Desembarque nacional",
+       subtitle = "Congrio colorado",
+       caption = "Fuente: Sernapesca")+
+  theme_bw(14)
+p1
+
+
+
 # Evaluación modelo m1  -------------------------------
-#m1 = ocom(year=yr, catch=ct, m=0.25)
+m1 = ocom(year=yr, catch=ct, m=0.25)
 #Resumen parámetros
 m1$ref_pts
 # Parámetros poblacionales
@@ -45,6 +60,7 @@ b1 = m1$ref_ts$b[1]
 
 mitabla <- data.frame(r=r,k=k,bmsy=bmsy,blim=blim,fmsy=fmsy,msy=msy,b1=b1)
 mitabla
+
 # Graficos: series de tiempo ----------------------------------------------
 dfbiom <- data.frame(yr=yr,  ct=m1$ref_ts$catch,Bt=m1$ref_ts$b,Li=m1$ref_ts$b_lo,Ls=m1$ref_ts$b_hi)
 fig4a <- ggplot(data=dfbiom,aes(x=yr,y=Bt))+
@@ -110,12 +126,11 @@ fig5 <- ggplot(data=kobe,aes(x=B_Bmsy,y=F_Fmsy))+
   geom_hline(yintercept = 1,linetype=2)+
   geom_vline(xintercept = 0.5,linetype=3)+
   geom_point(size=0.8)+
-  geom_point(aes(x=B_Bmsy[length(yr)],F_Fmsy[length(yr)]),shape=3,size=3)+
-  geom_line(col="grey")+
+  geom_path(aes(x=B_Bmsy[length(yr)],F_Fmsy[length(yr)]))+
   geom_text(aes(x=B_Bmsy[length(yr)],F_Fmsy[length(yr)],label="2021"),hjust = 0, nudge_x = 0.05)+
   geom_text(aes(x=B_Bmsy[1],F_Fmsy[1],label="1957"),hjust = 0, nudge_x = 0.05)+
   
-    scale_y_continuous(name = "F/Fmsy",limits = c(0,5))+
+  scale_y_continuous(name = "F/Fmsy",limits = c(0,5))+
   scale_x_continuous(name = "B/Bmsy",limits = c(0,2.5))+
   theme_bw(14)
 fig5
@@ -125,7 +140,8 @@ fig6
 fig7 <- ggarrange(fig4b,fig4d,labels = c("A","B"),ncol=1,nrow = 2)
 fig7
 
-ggsave("Figuras_ocom/Fig2_Biom-MortPesca_congriocol.png",plot=fig6,height = 10)
-ggsave("Figuras_ocom/Fig3_PBR_congriocol.png",plot=fig7,height = 10)
-ggsave("Figuras_ocom/Fig4_kobe_congriocol.png",plot=fig5)
+dir.create("Lab/OCOM/Figs")
+ggsave("OCOM/Figs/Fig2_Biom-MortPesca_congriocol.png",plot=fig6,height = 10)
+ggsave("OCOM/Figs/Fig3_PBR_congriocol.png",plot=fig7,height = 10)
+ggsave("OCOM/Figs/Fig4_kobe_congriocol.png",plot=fig5)
 
