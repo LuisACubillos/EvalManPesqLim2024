@@ -126,7 +126,8 @@ fig5 <- ggplot(data=kobe,aes(x=B_Bmsy,y=F_Fmsy))+
   geom_hline(yintercept = 1,linetype=2)+
   geom_vline(xintercept = 0.5,linetype=3)+
   geom_point(size=0.8)+
-  geom_path(aes(x=B_Bmsy[length(yr)],F_Fmsy[length(yr)]))+
+  geom_path()+
+  geom_point(aes(x=B_Bmsy[length(yr)],F_Fmsy[length(yr)]))+
   geom_text(aes(x=B_Bmsy[length(yr)],F_Fmsy[length(yr)],label="2021"),hjust = 0, nudge_x = 0.05)+
   geom_text(aes(x=B_Bmsy[1],F_Fmsy[1],label="1957"),hjust = 0, nudge_x = 0.05)+
   

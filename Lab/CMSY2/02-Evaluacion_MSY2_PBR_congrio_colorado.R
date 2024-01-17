@@ -20,14 +20,29 @@ library(ggpubr)
 
 # Datos -------------------------------------------------------------------
 dt <- read.csv("Datos/congriocol.csv",sep=";")
-load("Datos/Modelo_cmsy_resiliencia_medium.RData")
+
 # Prepara los datos en objetos separados
 ct <- dt$Desembarque
 yr <- dt$YY #años
 range(yr)
 
+p1 <- ggplot(data=dt,aes(x=YY, y=Desembarque))+
+  geom_line()+
+  geom_point()+
+  #geom_bar(position = "dodge",stat="identity",width = 0.8,color="black") +
+  #scale_fill_manual(values = c("#6C8EBF","#FFFFFF","orange","#74767a","red","grey70"))+
+  #scale_fill_manual(values = colorRampPalette(c("#FFFFFF","grey70","grey10"))(4))+
+  labs(x="Año", y="Desembarque (toneladas)")+
+  scale_x_continuous(limits = c(1957.5,2021.5))+
+  labs(title = "Desembarque nacional",
+       subtitle = "Congrio colorado",
+       caption = "Fuente: Sernapesca")+
+  theme_bw(14)
+p1
+
+
 # Evaluación modelo m1 con resiliencia baja -------------------------------
-#m1 = cmsy2(year=yr, catch=ct, resilience="Low")
+m2 = cmsy2(year=yr, catch=ct, resilience="Low")
 plot_dlm(m1)
 #Resumen parámetros
 m1$ref_pts
@@ -109,7 +124,7 @@ fig5 <- ggplot(data=kobe,aes(x=B_Bmsy,y=F_Fmsy))+
   geom_hline(yintercept = 1,linetype=2)+
   geom_vline(xintercept = 0.5,linetype=3)+
   geom_point(size=0.8)+
-  geom_point()+
+  geom_path()+
   geom_text(aes(x=B_Bmsy[length(yr)],F_Fmsy[length(yr)],label="2021"),hjust = 0, nudge_x = 0.05)+
   geom_text(aes(x=B_Bmsy[1],F_Fmsy[1],label="1957"),hjust = 0, nudge_x = 0.05)+
   
@@ -123,6 +138,8 @@ fig6
 fig7 <- ggarrange(fig4b,fig4d,labels = c("A","B"),ncol=1,nrow = 2)
 fig7
 
+
+dir.create("Lab/CMSY2/Figs")
 ggsave("Figuras/Fig2_Biom-MortPesca_congriocol.png",plot=fig6,height = 10)
 ggsave("Figuras/Fig3_PBR_congriocol.png",plot=fig7,height = 10)
 ggsave("Figuras/Fig4_kobe_congriocol.png",plot=fig5)
