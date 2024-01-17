@@ -1,13 +1,11 @@
-##################################################################
 # Length-based Bayesian Biomass estimator (LBB)
 # Fits LBB model to length frequency data to estimate Linf, Lc, M/K, F/K 
 # Derives reference points F/M, Z/K, Lopt, Lc_opt, B/B0, B/Bmsy, Y/R
 # Main code developed by Rainer Froese in May-June 2017, modified in April-May 2018
 # Gianpaolo Coro and Henning Winker did the JAGS coding
 # Gianpaolo added the code for "Best year" in April 2019
+# Deng Palomares indicated common errors and alert messages, after experience in courses, in October 2019
 # Gives option in the ID file to correct for the piling-up effect, with Pile=0 no correction, Pile=1 full correction, Pile=999 degree of correction determined by fit
-#
-setwd("~/01Cursos/EvalManPesqLim2024/Lab/LBB")
 
 # Automatic package installation
 list.of.packages <- c("R2jags", "Hmisc","lattice","survival","Formula","ggplot2","crayon")
@@ -17,16 +15,15 @@ if(length(new.packages)) install.packages(new.packages)
 rm(list=ls(all=TRUE)) # clear previous variables etc
 options(digits=3) # displays all numbers with three significant digits as default
 graphics.off() # close graphics windows from previous sessions
-library(rjags)
 library(R2jags)
 library(Hmisc)
 library(crayon) # to display bold and italics in console
-
+library(dplyr)
 # Select stock to be analysed
-Stock       <-  "reineta" #"DPS_GSA22" # "Ench_cim22-24"  # "Myox_scor_22-24" # "Myo_quad_Balt"  
+Stock       <-  "reineta"#"Ille_coi_AD" #"reineta" #"Ille_coi_AD"  #"DPS_GSA22" # "Ench_cim22-24"  # "Myox_scor_22-24" # "Myo_quad_Balt"  
 
 # Select file with stock ID info
-ID.File     <-  "reineta_ID.csv"#"Example_ID.csv"    
+ID.File     <-  "reineta_ID.csv"#"Example_ID.csv"#"reineta_ID.csv" #"Example_ID.csv"    
 
 # Settings
 n.sim       <- 10   # ifelse(Stock %in% c("CodRedFSim"),1,10) # number of years to be created in simulations
@@ -180,16 +177,72 @@ ma    <- function(x){
 # read files with ID and with LF data to be analyzed
 #############################################################
 # read ID data
+tryCatch({
 dat.ID         <- read.csv(ID.File, header=T, stringsAsFactors=F) 
+},
+error=function(cond) {
+  cat("ERROR: Bad structure of input CSV file - hints to check file consistency:\nCheck your CSV file by displaying it as a text file,\ni.e. right click on the file and click Open with 'Notepad' or any other text file displayer that you have on your laptop,\nCheck that there are no floating commas at the end of each line. \nIf there are floating commas, then delete those and assure that the data being saved has not been corrupted, i.e. the columns did not move between rows and that all of the data is intact.\nGo to the last line and press the carriage return if a final blank line is not present \nErase any floating commas, then rerun the software.\n")
+  stop()
+}
+)
+
+#ERRORS MANAGEMENT by Deng
+if (dim(dat.ID)[1]==1 && dim(dat.ID)[2]==1 && regexpr(";", as.character(dat.ID))[[1]]>10){
+  cat("ERROR: The CSV file is using ';' instead of ',': To solve this, go to File, Options (in Windows) and advanced settings and change the list delimiter from semi colon to a comma. In Mac, close Excel, click on Apple icon, select Language and Region, then Advanced, then change the Number separators Grouping from semi-colon to comma then press OK.\n")
+  stop()
+}
+
 
 # restrict ID data to selected Stock
 dat.ID         <- dat.ID[dat.ID$Stock==Stock,]
+
+if (length(dat.ID$File)>=2){
+  cat("ERROR: Duplicate entry for stock",Stock,". Please use different identifiers for different entries (i.e. lines in the ID file).\n",sep="")
+  stop()
+}
+
+if (is.na(dat.ID$mm.user)){
+  cat("ERROR: mm.user is NA while it should be TRUE or FALSE.\n")
+  stop()
+}   
+
+if (is.na(dat.ID$GausSel)){
+  cat("ERROR: GausSel is NA while it should be TRUE or FALSE.\n")
+  stop()
+}
+
+if (is.na(dat.ID$MergeLF)){
+  cat("ERROR: MergeLF is NA while it should be TRUE or FALSE.\n")
+  stop()
+}
+
+if (is.na(dat.ID$Pile) || (dat.ID$Pile!=1 && dat.ID$Pile!=0 && dat.ID$Pile!=999)){
+  cat("ERROR: The Pile column in the ID file cannot be left blank or with NA but which should have either of three values: Pile=0 no correction, Pile=1 full correction, Pile=999 degree of correction determined by fit (see user guide). Also, watch out for possible blank lines in the ID file.\n")
+  stop()
+}
+
+if (dat.ID$mm.user==F){
+  cat("REMINDER: Lengths in the ID file should be reported in cm, whereas lengths in the catch-at-length file should be always reported in mm.\n",sep="")
+}else{
+  cat("REMINDER: Lengths in the ID file should be reported in mm. Lengths in the catch-at-length file should be reported in mm.\n",sep="")
+}
+
+if (!file.exists(dat.ID$File)){
+  cat("ERROR: Filename in File column does not correspond to filename of raw data. For example, check if the filename lacks the '.csv' extension of the catch file is misspelled or has wrong case.\n")
+  stop()
+}
+
 
 # read LF data
 dat.raw        <- read.csv(dat.ID$File, header=T, stringsAsFactors=F) 
 
 # restrict LF data to selected stock
 dat.raw        <- dat.raw[dat.raw$Stock == Stock,] 
+
+if (dim(dat.raw)[1]==0){
+  cat("ERROR: Stock ID in ID file does not correspond to the Stock ID in DAT or Catch file (misspelled/wrong case).\n")
+  stop()
+}
 
 # remove NA records
 dat.raw    <- dat.raw[which(is.na(dat.raw$CatchNo)==F),]
@@ -265,7 +318,7 @@ if(substr(Stock,start=nchar(Stock)-2,stop=nchar(Stock))=="Sim") {
 #-----------------------------------------------------
 for(z in 1:ceiling(nYears/6)) {
   #modification by Gianpaolo 09 07 17  
-  if(grepl("win",tolower(Sys.info()['sysname']))) {windows(12,8)
+  if(grepl("win",tolower(Sys.info()['sysname'])) && !grepl("darwin",tolower(Sys.info()['sysname']))) {windows(12,8)
   } else if(grepl("linux",tolower(Sys.info()['sysname']))) {X11(12,8)
   } else {quartz(12,8)}
     par(mfrow=c(2,3))
@@ -449,7 +502,7 @@ cat("Running   Jags model to fit SL and N distributions for",dat.ID$Species,"\n"
 jagsFit<-c() #modification by GP to select the best year
 
 # open window for plotting annual fits
-if(grepl("win",tolower(Sys.info()['sysname']))) {quartz(12,8,record=TRUE) # code for different OS by GP
+if(grepl("win",tolower(Sys.info()['sysname']))) {windows(12,8,record=TRUE) # code for different OS by GP
 } else if(grepl("linux",tolower(Sys.info()['sysname']))) {X11(12,8,record=TRUE)
 } else {quartz(12,8,record=TRUE)}
 par(mfrow=c(2,3))
@@ -798,7 +851,7 @@ if(dat.ID$GausSel==F) {
 #-----------------------------------------------
 # Apply smoothing if desired
 #----------------------------------------------
-if(smooth.ts==TRUE && nYears>=3) {
+if(smooth.ts==FALSE && nYears>=3) {
   Linf.ts        <- ma(Ldat$Linf)
   Lmean.ts       <- ma(Ldat$Lmean)
   Lc.ts          <- ma(Ldat$Lc)
@@ -859,7 +912,7 @@ if(smooth.ts==TRUE && nYears>=3) {
   BB0.ts         <- Ldat$BB0
   BB0.lcl.ts     <- Ldat$BB0.lcl
   BB0.ucl.ts     <- Ldat$BB0.ucl
-  if(dat.ID$GausSel==T) {
+  if(dat.ID$GausSel==TRUE) {
     GLmean.ts      <- Ldat$GLmean
     GLmean.lcl.ts  <- Ldat$GLmean.lcl
     GLmean.ucl.ts  <- Ldat$GLmean.ucl
