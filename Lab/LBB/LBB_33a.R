@@ -6,7 +6,8 @@
 # Gianpaolo added the code for "Best year" in April 2019
 # Deng Palomares indicated common errors and alert messages, after experience in courses, in October 2019
 # Gives option in the ID file to correct for the piling-up effect, with Pile=0 no correction, Pile=1 full correction, Pile=999 degree of correction determined by fit
-
+mydir = "/Users/luiscubillos/01Cursos/EvalManPesqLim2024/Lab/LBB"
+setwd(mydir)
 # Automatic package installation
 list.of.packages <- c("R2jags", "Hmisc","lattice","survival","Formula","ggplot2","crayon")
 new.packages <- list.of.packages[!(list.of.packages %in% installed.packages()[,"Package"])]
@@ -20,10 +21,10 @@ library(Hmisc)
 library(crayon) # to display bold and italics in console
 library(dplyr)
 # Select stock to be analysed
-Stock       <-  "reineta"#"Ille_coi_AD" #"reineta" #"Ille_coi_AD"  #"DPS_GSA22" # "Ench_cim22-24"  # "Myox_scor_22-24" # "Myo_quad_Balt"  
+Stock       <-  "Ille_coi_AD" #"reineta" # # #"Ille_coi_AD" #"reineta" #"Ille_coi_AD"  #"DPS_GSA22" # "Ench_cim22-24"  # "Myox_scor_22-24" # "Myo_quad_Balt"  
 
 # Select file with stock ID info
-ID.File     <-  "reineta_ID.csv"#"Example_ID.csv"#"reineta_ID.csv" #"Example_ID.csv"    
+ID.File     <-  "Example_ID.csv"  #"reineta_ID.csv"# "Example_ID.csv" #  ##"reineta_ID.csv" #"Example_ID.csv"    
 
 # Settings
 n.sim       <- 10   # ifelse(Stock %in% c("CodRedFSim"),1,10) # number of years to be created in simulations
