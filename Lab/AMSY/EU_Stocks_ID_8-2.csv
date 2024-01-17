@@ -1,0 +1,4 @@
+﻿CPUE_File,Stock,Name,EnglishName,ScientificName,StartYear,EndYear,Resilience,r.low,r.hi,Bk.yr,Bk.pr,Bk.pr.low,Bk.pr.hi,e.creep,Comment,Source,MSY.BSM,MSY.BSM.lcl,MSY.BSM.ucl,r.BSM,r.BSM.lcl,r.BSM.ucl,k.BSM,k.BSM.lcl,k.BSM.ucl,B_Bmsy,B_Bmsy.lcl,B_Bmsy.ucl,F_Fmsy,F_Fmsy.lcl,F_Fmsy.ucl 
+EU_Stocks_CPUE_2.csv,ple-2123,"Plaice in Subdivisions 21, 22, and 23 (Kattegat, Belts, and Sound)",NA,Pleuronectes platessa,1999,2015,Medium,0.35,0.79,1999,Small,NA,NA,NA,,,4.48,3.74,5.36,0.73,0.61,0.87,24.6,20.19,29.98,1.42,1.06,1.68,0.41,0.35,0.55
+EU_Stocks_CPUE_2.csv,AncudBay,Mud Crab,NA,Metacarcinus edwarsii,2000,2019,Medium,0.35,0.79,2000,Small,NA,NA,NA,,,4.48,3.74,5.36,0.73,0.61,0.87,24.6,20.19,29.98,1.42,1.06,1.68,0.41,0.35,0.55
+EU_Stocks_CPUE_2.csv,ChaDa,Mud Crab,NA,Metacarcinus edwarsii,2000,2019,Medium,0.35,0.79,2000,Small,NA,NA,NA,,,4.48,3.74,5.36,0.73,0.61,0.87,24.6,20.19,29.98,1.42,1.06,1.68,0.41,0.35,0.55
