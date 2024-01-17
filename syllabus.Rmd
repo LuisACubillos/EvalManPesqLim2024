@@ -28,7 +28,7 @@ Hora  | Tópicos
 12:00-12:15 | Café
 12:15-13:30 | [Lab 3 - Guía práctica LBSPR](https://luisacubillos.github.io/EvalManPesqLim2024/Lab/Lab3_Guia_Practica_LBSPR.pdf)
 13:30-14:30 | Pausa
-14:30-15:30 | Demostración LBB
+14:30-15:30 | [Demostración LBB](https://github.com/LuisACubillos/EvalManPesqLim2024/Lab/LBB)
 15:30-15:45 | Café
 15:45-16:30 | Demostración LBPA
 
@@ -36,13 +36,13 @@ Hora  | Tópicos
 
 Hora  | Tópicos
 ------------- | ----------------------------------------------------
-11:00-12:00 | [Catch-only models]
+11:00-12:00 | [Catch-only models](https://luisacubillos.github.io/EvalManPesqLim2024/Clases/Dia3_Clase4_ModelosCaptura-Basados.pdf)
 12:00-12:15 | Café
-11:15-12:00 | Lab 4 - Guía práctica OCOM, CMSY2, BSPM
+11:15-12:00 | [OCOM](https://github.com/LuisACubillos/EvalManPesqLim2024/Lab/LBB), [CMSY2](https://github.com/LuisACubillos/EvalManPesqLim2024/Lab/CMSY2), BMS
 12:00-12:15 | Pausa y café
-12:15-13:00 | Demostración AMSY
+12:15-13:00 | [Demostración AMSY](https://github.com/LuisACubillos/EvalManPesqLim2024/Lab/AMSY)
 13:00-14:00 | Pausa
-14:00-15:00 | Demostración JABBA
+14:00-15:00 | [Demostración JABBA](https://github.com/LuisACubillos/EvalManPesqLim2024/Lab/Jabba)
 
 ## Día 4: Reglas de control de captura. Simulación bajo incertidumbre
 
