@@ -38,7 +38,7 @@ Hora  | Tópicos
 ------------- | ----------------------------------------------------
 11:00-12:00 | [Catch-only models](https://luisacubillos.github.io/EvalManPesqLim2024/Clases/Dia3_Clase4_ModelosCaptura-Basados.pdf)
 12:00-12:15 | Café
-11:15-12:00 | [OCOM](https://github.com/LuisACubillos/EvalManPesqLim2024/tree/main/Lab/OCOM), [CMSY2](https://github.com/LuisACubillos/EvalManPesqLim2024/tree/main/Lab/CMSY2), BMS
+11:15-12:00 | [OCOM](https://github.com/LuisACubillos/EvalManPesqLim2024/tree/main/Lab/OCOM), [CMSY2](https://github.com/LuisACubillos/EvalManPesqLim2024/tree/main/Lab/CMSY2), BSPM
 12:00-12:15 | Pausa y café
 12:15-13:00 | [Demostración AMSY](https://github.com/LuisACubillos/EvalManPesqLim2024/tree/main/Lab/AMSY)
 13:00-14:00 | Pausa
