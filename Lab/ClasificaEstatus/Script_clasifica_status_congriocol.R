@@ -1,11 +1,14 @@
 # Clasificación del desembarque
 library(ggplot2)
+library(dplyr)
 
 # Datos -------------------------------------------------------------------
 dt <- read.csv("Lab/Data/congriocol.csv",sep=";")
-names(dt)
+glimpse(dt)
+range(dt$YY)
 
 colnames(dt) <- c("Species","Year","Landing")
+
 p2 <- ggplot(data=dt,aes(x=Year,y=Landing/max(Landing)))+
   geom_rect(xmin = 1954,
             xmax = 1970.5,
@@ -39,5 +42,7 @@ p2 <- ggplot(data=dt,aes(x=Year,y=Landing/max(Landing)))+
   ylab("C/Cmax")+
   theme_bw(14)
 p2
+
+
 
 

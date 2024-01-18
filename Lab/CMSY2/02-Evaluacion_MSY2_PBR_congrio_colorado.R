@@ -3,8 +3,8 @@
 # puntos biológicos de referencia Bmsy, Blim y Fmsy
 # 
 # Método: Only-catch model
-# Modelo: CMSY
-# m1 : CMSY con resiliencia media
+# Modelo: CMSY2
+# m1 : CMSY2 con resiliencia media
 
 # Carga de paquetes necesarios --------------------------------------------
 rm(list = ls())
@@ -40,38 +40,40 @@ p1 <- ggplot(data=dt,aes(x=YY, y=Desembarque))+
   theme_bw(14)
 p1
 
-
 # Evaluación modelo m1 con resiliencia baja -------------------------------
-m2 = cmsy2(year=yr, catch=ct, resilience="Low")
-plot_dlm(m1)
+#m2 = cmsy2(year=yr, catch=ct, resilience="Low")
+#m3 = cmsy2(year=yr, catch=ct, resilience="Medium")
+load("~/01Cursos/EvalManPesqLim2024/Lab/CMSY2/CMSY2_congriocol_m2.RData")
+
+plot_dlm(m2)
 #Resumen parámetros
-m1$ref_pts
+m2$ref_pts
 # Parámetros poblacionales
-m1$ref_pts[1:2,]
-r = m1$ref_pts[1,2]
-k = m1$ref_pts[2,2]
+m2$ref_pts[1:2,]
+r = m2$ref_pts[1,2]
+k = m2$ref_pts[2,2]
 
 # Puntos biológicos de referencia -----------------------------------------
-bmsy = m1$ref_pts[5,2]
-fmsy = m1$ref_pts[4,2]
+bmsy = m2$ref_pts[5,2]
+fmsy = m2$ref_pts[4,2]
 blim = 0.5*bmsy
-msy  = m1$ref_pts[3,2]
+msy  = m2$ref_pts[3,2]
 
 mitabla <- data.frame(r=r,k=k,bmsy=bmsy,blim=blim,fmsy=fmsy,msy=msy)
 mitabla
 # Graficos: series de tiempo ----------------------------------------------
-dfbiom <- data.frame(yr=yr,  ct=m1$ref_ts$catch,Bt=m1$ref_ts$b,Li=m1$ref_ts$b_lo,Ls=m1$ref_ts$b_hi)
+dfbiom <- data.frame(yr=yr,  ct=m2$ref_ts$catch,Bt=m2$ref_ts$b,Li=m2$ref_ts$b_lo,Ls=m2$ref_ts$b_hi)
 fig4a <- ggplot(data=dfbiom,aes(x=yr,y=Bt))+
   geom_ribbon(aes(ymin=Li,ymax=Ls),fill="grey70")+
   geom_line()+
   geom_hline(yintercept = bmsy,linetype="dashed")+
   geom_hline(yintercept = bmsy/2,linetype=3)+
   geom_line(aes(x=yr,y=ct),linetype=4)+
-  scale_y_continuous(name = "Biomasa (toneladas)",limits = c(0,25000))+
+  scale_y_continuous(name = "Biomasa (toneladas)",limits = c(0,30000))+
   theme_bw(14)+xlab("Year")
 fig4a
 
-dfb2bmsy <- data.frame(yr=yr,B_Bmsy=m1$ref_ts$bbmsy,Li=m1$ref_ts$bbmsy_lo,Ls=m1$ref_ts$bbmsy_hi)
+dfb2bmsy <- data.frame(yr=yr,B_Bmsy=m2$ref_ts$bbmsy,Li=m2$ref_ts$bbmsy_lo,Ls=m2$ref_ts$bbmsy_hi)
 fig4b <- ggplot(data=dfb2bmsy,aes(x=yr,y=B_Bmsy))+
   geom_ribbon(aes(ymin=Li,ymax=Ls),fill="grey70")+
   geom_line()+
@@ -81,7 +83,7 @@ fig4b <- ggplot(data=dfb2bmsy,aes(x=yr,y=B_Bmsy))+
   theme_bw(14)+xlab("Year")
 fig4b
 
-dfFt <- data.frame(yr=yr,Ft=m1$ref_ts$f,Li=m1$ref_ts$f_lo,Ls=m1$ref_ts$f_hi)
+dfFt <- data.frame(yr=yr,Ft=m2$ref_ts$f,Li=m2$ref_ts$f_lo,Ls=m2$ref_ts$f_hi)
 fig4c <- ggplot(data=dfFt,aes(x=yr,y=Ft))+
   geom_ribbon(aes(ymin=Li,ymax=Ls),fill="grey70")+
   geom_line()+
@@ -91,7 +93,7 @@ fig4c <- ggplot(data=dfFt,aes(x=yr,y=Ft))+
   theme_bw(14)+xlab("Year")
 fig4c
 
-dfF_fmsy <- data.frame(yr=yr,F_Fmsy=m1$ref_ts$ffmsy,Li=m1$ref_ts$ffmsy_lo,Ls=m1$ref_ts$ffmsy_hi)
+dfF_fmsy <- data.frame(yr=yr,F_Fmsy=m2$ref_ts$ffmsy,Li=m2$ref_ts$ffmsy_lo,Ls=m2$ref_ts$ffmsy_hi)
 fig4d <- ggplot(data=dfF_fmsy,aes(x=yr,y=F_Fmsy))+
   geom_ribbon(aes(ymin=Li,ymax=Ls),fill="grey70")+
   geom_line()+
@@ -101,7 +103,7 @@ fig4d <- ggplot(data=dfF_fmsy,aes(x=yr,y=F_Fmsy))+
   theme_bw(14)+xlab("Year")
 fig4d
 
-kobe <- data.frame(yr=yr,F_Fmsy=m1$ref_ts$ffmsy,B_Bmsy=m1$ref_ts$bbmsy)
+kobe <- data.frame(yr=yr,F_Fmsy=m2$ref_ts$ffmsy,B_Bmsy=m2$ref_ts$bbmsy)
 fig5 <- ggplot(data=kobe,aes(x=B_Bmsy,y=F_Fmsy))+
 
   geom_rect(xmin = 0,
