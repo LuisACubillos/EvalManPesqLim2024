@@ -1,6 +1,6 @@
 # Installation
-# install.packages(devtools)
-# devtools:: install_github("jabbamodel/JABBA")
+ install.packages(devtools)
+devtools::install_github("jabbamodel/JABBA")
 library(JABBA)
 
 df <- read.csv("Data/data_huepo.csv",sep=";")
