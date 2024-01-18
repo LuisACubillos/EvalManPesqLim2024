@@ -3,7 +3,7 @@
 library(LBPA)
 ?LBPA_fits
 
-model1 <- LBPA_fits("Lab/LBPAr/lbpa_dat.xlsx", graph_opt=T, save_opt=F )
+model1 <- LBPA_fits("Lab/LBPAr/lbpa_dat.xlsx", graph_opt=T, save_opt=T)
 
 # Modelo para centolla Los Lagos:
 
