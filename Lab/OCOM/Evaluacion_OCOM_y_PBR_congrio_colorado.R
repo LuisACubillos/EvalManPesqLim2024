@@ -6,7 +6,6 @@
 # Modelo: OCOM
 # m1 : OCOM con Mortalidad natural = 0.25
 
-
 # Carga de paquetes necesarios --------------------------------------------
 rm(list = ls())
 # 1) Paquetes para los modelos de evaluación
@@ -41,9 +40,9 @@ p1 <- ggplot(data=dt,aes(x=YY, y=Desembarque))+
 p1
 
 
-
 # Evaluación modelo m1  -------------------------------
-m1 = ocom(year=yr, catch=ct, m=0.25)
+m1 = ocom(year=yr, catch=ct, m = 0.25)
+glimpse(m1)
 #Resumen parámetros
 m1$ref_pts
 # Parámetros poblacionales
@@ -51,6 +50,7 @@ m1$ref_pts[1:2,4]
 r = m1$ref_pts[1,4]
 k = m1$ref_pts[2,4]
 
+plot_dlm(m1)
 # Puntos biológicos de referencia -----------------------------------------
 bmsy = m1$ref_pts[4,4]
 fmsy = m1$ref_pts[5,4]
@@ -62,14 +62,19 @@ mitabla <- data.frame(r=r,k=k,bmsy=bmsy,blim=blim,fmsy=fmsy,msy=msy,b1=b1)
 mitabla
 
 # Graficos: series de tiempo ----------------------------------------------
-dfbiom <- data.frame(yr=yr,  ct=m1$ref_ts$catch,Bt=m1$ref_ts$b,Li=m1$ref_ts$b_lo,Ls=m1$ref_ts$b_hi)
+dfbiom <- data.frame(yr=yr, 
+                    ct=m1$ref_ts$catch,
+                    Bt=m1$ref_ts$b,
+                    Li=m1$ref_ts$b_lo,
+                    Ls=m1$ref_ts$b_hi)
 fig4a <- ggplot(data=dfbiom,aes(x=yr,y=Bt))+
   geom_ribbon(aes(ymin=Li,ymax=Ls),fill="grey70")+
   geom_line()+
   geom_hline(yintercept = bmsy,linetype="dashed")+
   geom_hline(yintercept = bmsy/2,linetype=3)+
   #geom_line(aes(x=yr,y=ct),linetype=4)+
-  scale_y_continuous(name = "Biomasa (toneladas)",limits = c(0,30000))+
+  scale_y_continuous(name = "Biomasa (toneladas)",
+                     limits = c(0,30000))+
   theme_bw(14)+xlab("Year")
 fig4a
 
