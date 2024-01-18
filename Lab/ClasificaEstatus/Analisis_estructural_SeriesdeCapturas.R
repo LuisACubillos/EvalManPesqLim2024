@@ -78,7 +78,7 @@ mod1 = Fstats(yt ~ 1)
 sctest(mod1)
 # Valor-p < 0.05 => Hay cambios estructurales
 # Detección de puntos de quiebre: segmentación
-bp <- breakpoints(yt~1)
+bp <- breakpoints(yt ~ 1)
 summary(bp)
 plot(bp)
 plot(yt,las=1)
@@ -88,7 +88,7 @@ lines(bp)
 mod2 <- Fstats(yt ~ xt)
 sctest(mod2)
 # Valor-p < 0.05 => Hay cambios estructurales
-bp2 <- breakpoints(ct~xt)
+bp2 <- breakpoints(yt~xt)
 summary(bp2)
 plot(bp2)
 plot(yt,las=1)
@@ -124,12 +124,12 @@ salto4 <- mod3$rightIndex[4]
 salto5 <- mod3$rightIndex[5]
 salto6 <- mod3$rightIndex[6]
 
-sd1 <- sd(ct[1:salto1])
-sd2 <- sd(ct[(salto1+1):(salto2)])
-sd3 <- sd(ct[(salto2+1):(salto3)])
-sd4 <- sd(ct[(salto3+1):(salto4)])
-sd5 <- sd(ct[(salto4+1):(salto5)])
-sd6 <- sd(ct[(salto5+1):(salto6)])
+sd1 <- sd(yt[1:salto1])
+sd2 <- sd(yt[(salto1+1):(salto2)])
+sd3 <- sd(yt[(salto2+1):(salto3)])
+sd4 <- sd(yt[(salto3+1):(salto4)])
+sd5 <- sd(yt[(salto4+1):(salto5)])
+sd6 <- sd(yt[(salto5+1):(salto6)])
 
 yr <- dt$Year
 mct <- c(rep(mod3$value[1],salto1),
@@ -198,7 +198,7 @@ p4 <- ggplot(data=df,aes(x=Year,y=log(Landing)))+
   theme_bw(14)
 p4
 
-fig2 <- ggarrange(p2,p3,p4,labels=c("A","B","C"),nrow=3,ncol=1)
+fig2 <- ggarrange(p2,p4,labels=c("A","B"),nrow=2,ncol=1)
 fig2
 ggsave("Report/Figs/Fig02_catch_analysis.jpg",fig2,width = 18,height = 32,units = "cm")
 
