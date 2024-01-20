@@ -1,12 +1,13 @@
 # Installation
- install.packages(devtools)
-devtools::install_github("jabbamodel/JABBA")
+#install.packages(devtools)
+#devtools::install_github("jabbamodel/JABBA")
 library(JABBA)
 
-df <- read.csv("Data/data_huepo.csv",sep=";")
+df <- read.csv("Lab/Data/data_huepo.csv",sep=";")
 head(df)
+tail(df)
 
-File = "~/Rwork/JabbaSA/huepo/practico1"
+File = "/Users/luiscubillos/01Cursos/EvalManPesqLim2024/Lab/Jabba"
 
 #><>><>><>><>><>><>><>><>><>><>><>
 # Huepo - Golfo de Arauco
@@ -49,6 +50,7 @@ huepo1 = fit_jabba(jbinput,
                    output.dir=output.dir,
                    quickmcmc = TRUE)
 # Make individual plots
+jbplot_summary(huepo1)
 jbplot_catch(huepo1)
 jbplot_catcherror(huepo1)
 jbplot_ppdist(huepo1)
@@ -59,14 +61,16 @@ jbplot_logfits(huepo1)
 jbplot_procdev(huepo1)
 
 # Plot Status Summary 
-par(mfrow=c(3,2),mar = c(3.5, 3.5, 0.5, 0.1)) 
-jbplot_trj(huepo1,type="B",add=T) 
-jbplot_trj(huepo1,type="F",add=T) 
-jbplot_trj(huepo1,type="BBmsy",add=T)
-jbplot_trj(huepo1,type="FFmsy",add=T)
-jbplot_spphase(huepo1,add=T)
-jbplot_kobe(huepo1,add=T)
+#par(mfrow=c(3,2),mar = c(3.5, 3.5, 0.5, 0.1)) 
+jbplot_trj(huepo1,type="B",add=F) 
+jbplot_trj(huepo1,type="F",add=F) 
+jbplot_trj(huepo1,type="BBmsy",add=F)
+jbplot_trj(huepo1,type="FFmsy",add=F)
+jbplot_spphase(huepo1,add=F)
+jbplot_kobe(huepo1,add=F)
 
+#SP = Bt+1 - Bt + Ct
+#SP = Ct
 
 # Try to improve runs test diagnostics by changing the variance settings
 jbinput = build_jabba(catch=huepo$catch,
@@ -79,23 +83,25 @@ jbinput = build_jabba(catch=huepo$catch,
                       fixed.obsE = 0.1,
                       igamma = c(0.001,0.001),
                       psi.prior = c(1,0.1))
+
 huepo2 = fit_jabba(jbinput,save.jabba=TRUE,output.dir=output.dir)
 # Check residual diags
-jbplot_cpuefits(huepo2)
-jbplot_runstest(huepo2)
-jbplot_logfits(huepo2)
+jbplot_summary(huepo2)
+jbplot_cpuefits(huepo3)
+jbplot_runstest(huepo3)
+jbplot_logfits(huepo3)
 # Improved
 refinput = jbinput # Note as reference input 
 
 
 # status summary
-par(mfrow=c(3,2),mar = c(3.5, 3.5, 0.5, 0.1))
-jbplot_trj(huepo2,type="B",add=T)
-jbplot_trj(huepo2,type="F",add=T)
-jbplot_trj(huepo2,type="BBmsy",add=T)
-jbplot_trj(huepo2,type="FFmsy",add=T)
-jbplot_spphase(huepo2,add=T)
-jbplot_kobe(huepo2,add=T)
+#par(mfrow=c(3,2),mar = c(3.5, 3.5, 0.5, 0.1))
+jbplot_trj(huepo2,type="B",add=F)
+jbplot_trj(huepo2,type="F",add=F)
+jbplot_trj(huepo2,type="BBmsy",add=F)
+jbplot_trj(huepo2,type="FFmsy",add=F)
+jbplot_spphase(huepo2,add=F)
+jbplot_kobe(huepo2,add=F)
 
 # Write all as png
 jabba_plots(jabba=huepo2,output.dir = output.dir)
@@ -110,23 +116,24 @@ jbinput = build_jabba(catch=huepo$catch,
                       se=NULL,
                       assessment=assessment,
                       scenario = "Est.Shape",
-                      model.type = "Pella_m",
+                      model.type = "Pella",
                       BmsyK=0.4,
+                      Plim = 0.2,
                       sigma.est = TRUE,
-                      fixed.obsE = 0.1
-                      ,igamma = c(0.001,0.001),
+                      fixed.obsE = 0.1,
+                      igamma = c(0.001,0.001),
+                      b.prior = c(0.3,0.4,2005,type="bbmsy"),
                       psi.prior = c(1,0.1))
 huepo3 = fit_jabba(jbinput,save.jabba=TRUE,output.dir=output.dir)
 
 jbplot_ppdist(huepo3) # check shape prior & posterior dist
 # Compare
-par(mfrow=c(2,2))
-jbplot_trj(huepo2,type="BBmsy",add=T)
-jbplot_trj(huepo3,type="BBmsy",add=T)
-jbplot_kobe(huepo3,add=T)
-jbplot_kobe(huepo3,add=T)
-
-
+jbplot_summary(huepo3)
+#par(mfrow=c(2,2))
+jbplot_trj(huepo3,type="BBmsy",add=F)
+jbplot_trj(huepo3,type="BBmsy",add=F)
+jbplot_kobe(huepo3,add=F)
+jbplot_kobe(huepo3,add=F)
 jbplot_mcmc(huepo3)
 jbplot_residuals(huepo3)
 round(huepo3$estimates,3)
@@ -143,7 +150,7 @@ huepoM3 = hindcast_jabba(jbinput=jbinput,
                          peels = 1:5)
 
 # Retro Analysis Summary plot
-jbplot_retro(huepoM3,type = c("B", "F"),xlim = c(),output.dir = retro.dir)
+jbplot_retro(huepoM3,type = c("B", "F"),output.dir = retro.dir)
 # Zoom-in
 mohnsrho = jbplot_retro(huepoM3)
 

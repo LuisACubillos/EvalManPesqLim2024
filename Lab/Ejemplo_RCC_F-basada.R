@@ -6,7 +6,7 @@
 # Escenario 4: Regla D  F = Rampa con veda
 ###############################################
 # Prepara visualización de las RCC
-Brel = seq(0,3,0.01)
+Brel = seq(0,3,0.01) # B/Bmsy = indicador
 Ft = Ct = numeric()
 Fmsy = 0.3
 RMS = 10

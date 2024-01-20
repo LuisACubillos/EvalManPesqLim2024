@@ -48,13 +48,13 @@ Hora  | Tópicos
 
 Hora  | Tópicos
 ------------- | ----------------------------------------------------
-10:00-11:00 | Análisis estructural de capturas y HCR
-11:00-11:15 | Pausa y café
-11:15-12:00 | Lab 6 - Guía Práctica Fase de Proyección HCR F-basada
-12:00-12:15 | Pausa y café
-12:15-13:00 | Lab 7 - Guía Práctica Fase de Proyección HCR Captura-basada
-13:00-14:00 | Pausa
-14:00-15:00 | Consultas casos de estudio
+11:00-12:00 | [Análisis estructural de capturas](https://github.com/LuisACubillos/EvalManPesqLim2024/tree/main/Lab/ClasificaEstatus) y [Clase 5 Reglas de Control](https://github.com/LuisACubillos/EvalManPesqLim2024/blob/main/Clases/Dia4_Clase5_ReglasDeControl_Sim.pdf)
+12:00-12:15 | Café
+12:45-13:30 | [Fase de Proyección RCC F-basada OCOM](https://github.com/LuisACubillos/EvalManPesqLim2024/tree/main/Lab/OCOM)
+13:30-14:30 | Pausa
+14:30-15:30 | [Fase de Proyección F-basada CMSY2](https://github.com/LuisACubillos/EvalManPesqLim2024/tree/main/Lab/CMSY2)
+15:30-15:45 | Café
+15:45-16:30 | Consultas casos de estudio
 
 ## Día 5: Casos de estudio
 
